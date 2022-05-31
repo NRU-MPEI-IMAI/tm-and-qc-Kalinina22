@@ -1,0 +1,26 @@
+name: binary increment
+source code: |
+  input: '1111+111'
+  blank: ' '
+  start state: right
+  table:
+  # scan to the rightmost digit
+    right:
+      1: R
+      '+': {write: '1', R: tail}
+    tail:
+      1: R
+      ' ': {L: del_and_return}
+    del_and_return:
+      1: {write: ' ', L: return}
+    return:
+      1: L
+      ' ': {R: done}
+
+    done:
+positions:
+  right: {x: 52.55, y: 309.15}
+  tail: {x: 264.42, y: 161.56}
+  del_and_return: {x: 399.49, y: 296.91}
+  return: {x: 542.43, y: 167.31}
+  done: {x: 673.76, y: 307.21}

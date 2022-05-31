@@ -1,0 +1,76 @@
+name: binary increment
+source code: |
+  input: '111'
+  blank: ' '
+  start state: start
+  table:
+    start:
+      1: {R: checkNumOne}
+      0: {write: a, R: checkOne}
+      ['a']: R
+      ['b']: R
+      ['c']: R
+      ' ': {L: check}
+    checkNumOne:
+      1: R
+      ' ': {write: '!', R: done}
+    checkOne:
+      1: {write: b, R: checkTwo}
+      0: R
+      ['b']: R
+    checkTwo: 
+      2: {write: c, L: backStart}
+      1: R
+      ['c']: R
+    backStart:
+      [0, 1, 2, 'a', 'b', 'c']: L
+      ' ': {R: start}
+    check:
+      ['a', 'b', 'c']: L
+      ' ': {write: '!', L: return}
+    return:
+      [0, 1, 2, 'a', 'b', 'c']: L
+      ' ': {R: done}
+    done:
+positions:
+  start: {x: 514.66, y: 312.53}
+  checkNumOne: {x: 648.34, y: 294.47, fixed: false}
+  checkOne: {x: 370.65, y: 333.57, fixed: false}
+  checkTwo: {x: 232.34, y: 295.5, fixed: false}
+  backStart: {x: 168.16, y: 429.23}
+  check: {x: 426.76, y: 191.97, fixed: false}
+  return: {x: 556.45, y: 128.01, fixed: false}
+  done: {x: 715.45, y: 163.7}
+editor contents: |
+  input: '001122'
+  blank: ' '
+  start state: start
+  table:
+    start:
+      1: {R: checkNumOne}
+      0: {write: a, R: checkOne}
+      ['a']: R
+      ['b']: R
+      ['c']: R
+      ' ': {L: check}
+    checkNumOne:
+      1: R
+      ' ': {write: '!', R: done}
+    checkOne:
+      1: {write: b, R: checkTwo}
+      0: R
+      ['b']: R
+    checkTwo: 
+      2: {write: c, L: backStart}
+      1: R
+      ['c']: R
+    backStart:
+      [0, 1, 2, 'a', 'b', 'c']: L
+      ' ': {R: start}
+    check:
+      ['a', 'b', 'c']: L
+      ' ': {write: '!', L: return}
+    return:
+      [0, 1, 2, 'a', 'b', 'c']: L
+      ' ': {R: done}
+    done:

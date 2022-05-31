@@ -1,0 +1,72 @@
+name: binary increment
+source code: |
+  input: '11*11'
+  blank: ' '
+  start state: right
+  table:
+    right:
+      1: R
+      '*': R
+      ' ': {write: '=', L: backStart}
+    backStart:
+      1: L
+      '*': L
+      ' ': {R: start}
+    start:
+      1: {write: 0, R: mlt}
+      0: R
+      '*': {L: backNumMnog}
+    backNumMnog:
+      0: {write: 1, L}
+      ' ': {R: done}
+    mlt:
+      '*': R
+      1: R
+      0: R
+      '=': {L: del_one}
+    del_one:
+      1: L
+      0: L
+      '*': {R: del_one2}
+    del_one2:
+      1: {write: 0, R: wr_one}
+      0: R
+    wr_one:
+      '=': R
+      1: R
+      ' ': {write: 1, L: backMlt}
+    backMlt:
+      1: L
+      '=': {L: backMlt2}
+    backMlt2:
+      0: L
+      1: {L: del_one}
+      '*': {R: backNum}
+    backNum:
+      0: {write: 1, R}
+      '=': {L: start2}
+    start2:
+       0: L
+       1: L
+       '*': L
+       ' ': {R: start}
+    return:
+      1: L
+      ' ': {R: done}
+
+    done:
+positions:
+  right: {x: 74.85, y: 267.45}
+  backStart: {x: 168.16, y: 429.23}
+  start: {x: 514.66, y: 312.53}
+  backNumMnog: {x: 686.83, y: 303.82}
+  mlt: {x: 282.57, y: 328.52}
+  del_one: {x: 279.11, y: 187.06, fixed: false}
+  del_one2: {x: 97.33, y: 122.44}
+  wr_one: {x: 290.28, y: 84.97}
+  backMlt: {x: 445.23, y: 89.5}
+  backMlt2: {x: 459.38, y: 237.89}
+  backNum: {x: 444.44, y: 450.2}
+  start2: {x: 660.68, y: 456.58}
+  return: {x: 570.55, y: 132.4}
+  done: {x: 715.45, y: 163.7}

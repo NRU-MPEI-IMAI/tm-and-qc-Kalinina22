@@ -1,0 +1,65 @@
+name: binary increment
+source code: |
+  input: '()[]'
+  blank: ' '
+  start state: start
+  table:
+    start:
+      ' ': {L: ok}
+      ['(','[','{']: {R: find-closed}
+      [')',']','}']: {L: not-ok}
+    
+    find-closed:
+      ' ': {L: empty-or-ok}
+      ['(','[','{','x']: R
+      ')': {write: 'x', L: closed_1}
+      ']': {write: 'x', L: closed_2}
+      '}': {write: 'x', L: closed_3}
+    
+    closed_1:
+      ' ': {L: not-ok}
+      '(': {write: 'x', R: find-closed} 
+      ['[','{']: {L: not-ok}
+      'x': L
+    
+    closed_2:
+      ' ': {L: not-ok}
+      '[': {write: 'x', R: find-closed} 
+      ['(','{']: {L: not-ok}
+      'x': L
+    
+    closed_3:
+      ' ': {L: not-ok}
+      '{': {write: 'x', R: find-closed} 
+      ['[','(']: {L: not-ok}
+      'x': L
+    
+    empty-or-ok:
+      ['(','[','{']: {L: not-ok}
+      'x': L
+      ' ': {R: ok}
+    
+    not-ok:
+      ['(',')','[',']','{','}','x']: {write: ' ', R}
+      ' ': {R: go-start}
+    
+    go-start:
+      ['(',')','[',']','{','}','x']: {write: ' ', R: go-start}
+      ' ': {write: 0, L: done}
+    
+    ok:
+      ' ': {write: 1, L: done}
+      'x': {write: ' ', R}
+    
+    done:
+positions:
+  start: {x: 557.32, y: 393.01}
+  find-closed: {x: 143.24, y: 267.01}
+  closed_1: {x: 70.95, y: 414.47}
+  closed_2: {x: 323.11, y: 54.53}
+  closed_3: {x: 119.62, y: 88.14}
+  empty-or-ok: {x: 392.78, y: 140.39}
+  not-ok: {x: 333.51, y: 407.81}
+  go-start: {x: 463.84, y: 309}
+  ok: {x: 575.55, y: 98.24}
+  done: {x: 754.24, y: 207.33}
